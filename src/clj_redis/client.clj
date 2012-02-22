@@ -153,6 +153,9 @@
       (if-let [pair (.brpop j t ^"[Ljava.lang.String;" (into-array ks))]
         (seq pair)))))
 
+(defn brpoplpush [p ^String source ^String destination ^Integer timeout]
+  (lease p (fn [^Jedis j] (.brpoplpush j source destination timeout))))
+
 (defn lrange
   [p k ^Integer start ^Integer end]
   (lease p (fn [^Jedis j] (seq (.lrange j k start end)))))
